@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr v-for="(payment, index) in payments" :key="index">
-          <td>{{ index + 1 }}</td>
+          <td>{{ payment.id }}</td>
           <td>{{ payment.date }}</td>
           <td>{{ payment.category }}</td>
           <td>{{ payment.amount }}</td>
