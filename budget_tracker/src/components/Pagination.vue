@@ -1,12 +1,13 @@
 <template>
   <div>
-    <button v-for="n in pages" :key="n" @click="sendPageNumber(n)">
+    <button v-for="n in 3" :key="n" @click="changePage(n)">
       {{ n }}
     </button>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Pagination",
   props: {
@@ -17,13 +18,15 @@ export default {
 
   computed: {
     pages() {
-      return Math.ceil(this.paymentsLength / 5);
+      return Math.ceil(this.paymentsLength / 3);
     },
   },
 
   methods: {
-    sendPageNumber(number) {
-      this.$emit("pageClick", number);
+    ...mapActions(["fetchData"]),
+    changePage(number) {
+      this.fetchData(number);
+      this.$emit("pageChange", number);
     },
   },
 };

@@ -1,24 +1,35 @@
 <template>
   <div>
     <input type="text" placeholder="Date" v-model="date" />
-    <input type="text" placeholder="Category" v-model.trim="category" />
+    <select v-model="category">
+      <option
+        v-for="(option, index) in getCategoriesList"
+        :value="option"
+        :key="index"
+      >
+        {{ option }}
+      </option>
+    </select>
+
     <input type="text" placeholder="Amount" v-model.number="amount" />
     <button @click="sendPayment">Save</button>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "AddPaymentForm",
   data() {
     return {
       amount: "",
-      category: "",
+      category: "Food",
       date: "",
     };
   },
 
   computed: {
+    ...mapGetters(["getCategoriesList", "getLastPayment"]),
     getCurrentDate() {
       const today = new Date();
       // Добавляем ноль к дню и месяцу если число меньше 10-ти
@@ -40,6 +51,7 @@ export default {
       const { category, amount } = this;
 
       const data = {
+        id: this.getLastPayment.id + 1,
         amount,
         category,
         date: this.date || this.getCurrentDate,
