@@ -37,6 +37,24 @@
       "date": "25.03.2020",
       "category": "Food",
       "amount": 200
+    },
+    {
+      "amount": 56,
+      "category": "Sport",
+      "date": "02.07.2021",
+      "id": 7
+    },
+    {
+      "amount": 100,
+      "category": "Food",
+      "date": "27.06.2021",
+      "id": 8
+    },
+    {
+      "amount": 2400,
+      "category": "House",
+      "date": "23.06.2021",
+      "id": 9
     }
   ]
 }
