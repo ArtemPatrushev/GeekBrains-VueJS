@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "AddPaymentForm",
   data() {
@@ -29,7 +29,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getCategoriesList", "getLastPayment"]),
+    ...mapGetters(["getCategoriesList", "getTotalPayments"]),
     getCurrentDate() {
       const today = new Date();
       // Добавляем ноль к дню и месяцу если число меньше 10-ти
@@ -47,16 +47,17 @@ export default {
   },
 
   methods: {
+    ...mapMutations(["increaseTotalPayments"]),
     sendPayment() {
       const { category, amount } = this;
 
       const data = {
-        id: this.getLastPayment.id + 1,
+        id: this.getTotalPayments + 1,
         amount,
         category,
         date: this.date || this.getCurrentDate,
       };
-
+      this.increaseTotalPayments();
       this.$emit("addNewPayment", data);
     },
   },

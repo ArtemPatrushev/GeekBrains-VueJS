@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(payment, index) in payments" :key="index">
+        <tr v-for="payment in payments" :key="payment.id">
           <td>{{ payment.id }}</td>
           <td>{{ payment.date }}</td>
           <td>{{ payment.category }}</td>
