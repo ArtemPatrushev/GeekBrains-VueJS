@@ -58,5 +58,25 @@
       "date": "23.06.2021",
       "id": 9
     }
+  ],
+  "page4": [
+    {
+      "amount": 23,
+      "category": "Food",
+      "date": "16.07.2021",
+      "id": 10
+    },
+    {
+      "amount": 500,
+      "category": "House",
+      "date": "20.08.2021",
+      "id": 11
+    },
+    {
+      "amount": 1000,
+      "category": "House",
+      "date": "23.06.2021",
+      "id": 12
+    }
   ]
 }
