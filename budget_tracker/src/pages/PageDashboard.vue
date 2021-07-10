@@ -1,6 +1,16 @@
 <template>
   <div>
     <button @click="showPaymentForm = !showPaymentForm">ADD NEW COST+</button>
+    <br />
+    <button @click="quickPayment('Food', 200)">Quick payment - Food 200</button>
+    <br />
+    <button @click="quickPayment('Transport', 50)">
+      Quick payment - Transport 50
+    </button>
+    <br />
+    <button @click="quickPayment('Entertainment', 2000)">
+      Quick payment - Entertainment 2000
+    </button>
     <AddPaymentForm @addNewPayment="newPayment" v-show="showPaymentForm" />
     <PaymentsList :payments="currentPagePayments" />
     <Pagination :paymentsPerPage="paymentsPerPage" @pageChange="changePage" />
@@ -57,12 +67,17 @@ export default {
       this.currentPage = number;
       this.$router.push({ path: `/dashboard/${number}` });
     },
+
+    quickPayment(category, value) {
+      this.$router.push({ path: `/add/payment/${category}?value=${value}` });
+    },
   },
 
   created() {
     this.currentPage = Number(this.$route.params.page) || 1;
-
     this.fetchData(this.currentPage);
+
+    this.showPaymentForm = this.$attrs.showPaymentForm || false;
   },
 };
 </script>

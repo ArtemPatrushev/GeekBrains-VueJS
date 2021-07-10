@@ -15,6 +15,7 @@ export default new Vuex.Store({
       "Navigation",
       "Sport",
       "Education",
+      "Transport"
     ]
   },
   mutations: {
@@ -68,8 +69,9 @@ export default new Vuex.Store({
       );
 
       const payments = response.data;
+      const paymentsLength = Object.values(payments).flat().length;
 
-      if (!state.totalPayments) commit('setTotalPayments', Object.values(payments).flat().length);
+      if (state.totalPayments < paymentsLength) commit('setTotalPayments', paymentsLength + state.totalPayments);
 
       let payload = [];
 

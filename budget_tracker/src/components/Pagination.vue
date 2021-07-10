@@ -24,7 +24,11 @@ export default {
   methods: {
     ...mapActions(["fetchData"]),
     changePage(number) {
-      this.fetchData(number);
+      if (
+        number > Math.ceil(this.getFetchedPaymentsLength / this.paymentsPerPage)
+      ) {
+        this.fetchData(number);
+      }
       this.$emit("pageChange", number);
     },
   },

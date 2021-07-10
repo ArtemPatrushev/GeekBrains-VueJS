@@ -60,6 +60,30 @@ export default {
       this.increaseTotalPayments();
       this.$emit("addNewPayment", data);
     },
+
+    acceptQuickPayment() {
+      if (this.$route.params.category) {
+        this.category = this.$route.params.category;
+        this.date = this.getCurrentDate;
+      }
+
+      if (this.$route.query.value) {
+        this.amount = this.$route.query.value;
+        setTimeout(() => {
+          this.sendPayment();
+        }, 300);
+      }
+    },
+  },
+
+  watch: {
+    $route() {
+      this.acceptQuickPayment();
+    },
+  },
+
+  mounted() {
+    this.acceptQuickPayment();
   },
 };
 </script>

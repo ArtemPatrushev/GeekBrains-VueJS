@@ -21,13 +21,17 @@ export default new Router({
     },
     {
       path: '/dashboard/:page',
-      name: 'Dashboard',
       component: PageDashboard
     },
     {
       path: '/about*',
       name: 'About',
       component: PageAbout
+    },
+    {
+      path: '/add/payment/:category',
+      component: PageDashboard,
+      props: { showPaymentForm: true },
     },
     {
       path: '/404',
