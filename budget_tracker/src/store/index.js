@@ -39,11 +39,25 @@ export default new Vuex.Store({
       state.totalPayments += 1;
     },
 
+    decreaseTotalPayments(state) {
+      state.totalPayments -= 1;
+    },
+
     sortFetchedPayments(state) {
       state.fetchedPayments.sort((a, b) => {
         return a.id - b.id
       })
-    }
+    },
+
+    removePayment(state, id) {
+      state.fetchedPayments = state.fetchedPayments.filter(payment => payment.id !== id)
+    },
+
+    updatePayment(state, payload) {
+      const indexToUpdate = state.fetchedPayments.findIndex(payment => payment.id === payload.id);
+
+      Vue.set(state.fetchedPayments, indexToUpdate, payload);
+    },
   },
   getters: {
     getFetchedPayments(state) {

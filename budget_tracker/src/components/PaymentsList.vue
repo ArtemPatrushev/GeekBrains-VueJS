@@ -15,6 +15,14 @@
           <td>{{ payment.date }}</td>
           <td>{{ payment.category }}</td>
           <td>{{ payment.amount }}</td>
+          <button class="icon-btn" @click="showContextMenu(payment)">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <ContextMenu
+            v-if="showMenuForID === payment.id"
+            :actions="contextActions"
+            :item="{ ...payment }"
+          />
         </tr>
       </tbody>
     </table>
@@ -22,13 +30,49 @@
 </template>
 
 <script>
+import ContextMenu from "./ContextMenu.vue";
 export default {
   name: "PaymentsList",
+  components: {
+    ContextMenu,
+  },
   props: {
     payments: {
       type: Array,
       default: () => [],
     },
+  },
+
+  data() {
+    return {
+      paymentActions: [
+        { name: "Edit", comp: "EditPaymentForm", itemName: "Payment" },
+        { name: "Delete", comp: "ConfirmWindow", itemName: "Payment" },
+      ],
+      showMenuForID: null,
+      contextActions: null,
+    };
+  },
+
+  methods: {
+    showContextMenu(payment) {
+      if (!this.showMenuForID) {
+        this.$context.show(payment, this.paymentActions);
+      } else {
+        this.$context.hide();
+      }
+    },
+  },
+
+  mounted() {
+    this.$context.EventBus.$on("show", (data) => {
+      this.contextActions = data.actions;
+      this.showMenuForID = data.item.id;
+    });
+
+    this.$context.EventBus.$on("hide", () => {
+      this.showMenuForID = null;
+    });
   },
 };
 </script>

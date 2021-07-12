@@ -11,7 +11,9 @@
     <button @click="quickPayment('Entertainment', 2000)">
       Quick payment - Entertainment 2000
     </button>
-    <AddPaymentForm @addNewPayment="newPayment" v-show="showPaymentForm" />
+    <transition name="fade">
+      <AddPaymentForm @addNewPayment="newPayment" v-show="showPaymentForm" />
+    </transition>
     <PaymentsList :payments="currentPagePayments" />
     <Pagination :paymentsPerPage="paymentsPerPage" @pageChange="changePage" />
   </div>
@@ -35,10 +37,20 @@ export default {
 
   data() {
     return {
-      showPaymentForm: false,
       paymentsPerPage: 3,
-      currentPage: 1,
+      page: this.currentPage,
     };
+  },
+
+  props: {
+    showPaymentForm: {
+      type: Boolean,
+      default: () => false,
+    },
+    currentPage: {
+      type: Number,
+      default: () => 1,
+    },
   },
 
   computed: {
@@ -56,7 +68,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["addNewPayment"]),
+    ...mapMutations([
+      "addNewPayment",
+      "removePayment",
+      "updatePayment",
+      "decreaseTotalPayments",
+    ]),
     ...mapActions(["fetchData"]),
 
     newPayment(newPayment) {
@@ -64,23 +81,41 @@ export default {
     },
 
     changePage(number) {
-      this.currentPage = number;
+      this.page = number;
       this.$router.push({ path: `/dashboard/${number}` });
     },
 
     quickPayment(category, value) {
       this.$router.push({ path: `/add/payment/${category}?value=${value}` });
     },
+
+    deletePayment(payment) {
+      this.removePayment(payment.id);
+      this.decreaseTotalPayments();
+    },
+
+    editPayment(payment) {
+      this.updatePayment(payment);
+    },
   },
 
   created() {
-    this.currentPage = Number(this.$route.params.page) || 1;
-    this.fetchData(this.currentPage);
+    if (!this.paymentsList.length) {
+      this.fetchData(this.currentPage);
+    }
+  },
 
-    this.showPaymentForm = this.$attrs.showPaymentForm || false;
+  mounted() {
+    this.$context.EventBus.$on("deletepayment", this.deletePayment);
+    this.$context.EventBus.$on("editpayment", this.editPayment);
   },
 };
 </script>
 
-<style>
+<style lang="sass">
+.fade-enter-active, .fade-leave-active
+  transition: opacity .3s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
 </style>

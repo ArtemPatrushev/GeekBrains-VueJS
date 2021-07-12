@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import PageDashboard from '../pages/PageDashboard'
-import PageAbout from '../pages/PageAbout'
-import Page404 from '../pages/Page404'
+
 
 Vue.use(Router)
 
@@ -17,26 +15,27 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'Dashboard',
-      component: PageDashboard
+      component: () => import(/* webpackChunkName: "PageDashboard" */ '../pages/PageDashboard.vue'),
     },
     {
       path: '/dashboard/:page',
-      component: PageDashboard
+      component: () => import(/* webpackChunkName: "PageDashboard" */ '../pages/PageDashboard.vue'),
+      props: route => ({ currentPage: Number(route.params.page) })
     },
     {
       path: '/about*',
       name: 'About',
-      component: PageAbout
+      component: () => import(/* webpackChunkName: "PageAbout" */ '../pages/PageAbout.vue'),
     },
     {
       path: '/add/payment/:category',
-      component: PageDashboard,
+      component: () => import(/* webpackChunkName: "PageDashboard" */ '../pages/PageDashboard.vue'),
       props: { showPaymentForm: true },
     },
     {
       path: '/404',
       name: 'NotFound',
-      component: Page404
+      component: () => import(/* webpackChunkName: "Page404" */'../pages/Page404.vue'),
     },
     {
       path: '*',
