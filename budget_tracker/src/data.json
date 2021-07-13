@@ -1,82 +1,74 @@
-{
-  "page1": [
-    {
-      "id": 1,
-      "date": "20.03.2020",
-      "category": "Food",
-      "amount": 169
-    },
-    {
-      "id": 2,
-      "date": "21.03.2020",
-      "category": "Navigation",
-      "amount": 50
-    },
-    {
-      "id": 3,
-      "date": "22.03.2020",
-      "category": "Sport",
-      "amount": 450
-    }
-  ],
-  "page2": [
-    {
-      "id": 4,
-      "date": "23.03.2020",
-      "category": "Entertaiment",
-      "amount": 969
-    },
-    {
-      "id": 5,
-      "date": "24.03.2020",
-      "category": "Education",
-      "amount": 1500
-    },
-    {
-      "id": 6,
-      "date": "25.03.2020",
-      "category": "Food",
-      "amount": 200
-    }
-  ],
-  "page3": [
-    {
-      "amount": 56,
-      "category": "Sport",
-      "date": "02.07.2021",
-      "id": 7
-    },
-    {
-      "amount": 100,
-      "category": "Food",
-      "date": "27.06.2021",
-      "id": 8
-    },
-    {
-      "amount": 2400,
-      "category": "House",
-      "date": "23.06.2021",
-      "id": 9
-    }
-  ],
-  "page4": [
-    {
-      "amount": 23,
-      "category": "Food",
-      "date": "16.07.2021",
-      "id": 10
-    },
-    {
-      "amount": 500,
-      "category": "House",
-      "date": "20.08.2021",
-      "id": 11
-    },
-    {
-      "amount": 1000,
-      "category": "House",
-      "date": "23.06.2021",
-      "id": 12
-    }
-  ]
-}
+[
+  {
+    "amount": 500,
+    "category": "House",
+    "date": "08.20.2021",
+    "id": 11
+  },
+  {
+    "amount": 23,
+    "category": "Food",
+    "date": "07.16.2021",
+    "id": 10
+  },
+  {
+    "amount": 56,
+    "category": "Sport",
+    "date": "07.02.2021",
+    "id": 7
+  },
+  {
+    "amount": 100,
+    "category": "Food",
+    "date": "06.27.2021",
+    "id": 8
+  },
+  {
+    "amount": 2400,
+    "category": "House",
+    "date": "06.23.2021",
+    "id": 9
+  },
+  {
+    "amount": 1000,
+    "category": "House",
+    "date": "06.23.2021",
+    "id": 12
+  },
+  {
+    "id": 6,
+    "date": "03.25.2020",
+    "category": "Food",
+    "amount": 200
+  },
+  {
+    "id": 5,
+    "date": "03.24.2020",
+    "category": "Education",
+    "amount": 1500
+  },
+  {
+    "id": 4,
+    "date": "03.23.2020",
+    "category": "Entertaiment",
+    "amount": 969
+  },
+  {
+    "id": 3,
+    "date": "03.22.2020",
+    "category": "Sport",
+    "amount": 450
+  },
+  {
+    "id": 2,
+    "date": "03.21.2020",
+    "category": "Navigation",
+    "amount": 50
+  },
+  {
+    "id": 1,
+    "date": "03.20.2020",
+    "category": "Food",
+    "amount": 169
+  }
+]
