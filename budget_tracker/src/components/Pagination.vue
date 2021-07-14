@@ -15,19 +15,17 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getTotalPayments", "getFetchedPaymentsLength"]),
+    ...mapGetters(["getPaymentsLength"]),
     pages() {
-      return Math.ceil(this.getTotalPayments / this.paymentsPerPage);
+      return Math.ceil(this.getPaymentsLength / this.paymentsPerPage);
     },
   },
 
   methods: {
     ...mapActions(["fetchData"]),
     changePage(number) {
-      if (
-        number > Math.ceil(this.getFetchedPaymentsLength / this.paymentsPerPage)
-      ) {
-        this.fetchData(number);
+      if (number > Math.ceil(this.getPaymentsLength / this.paymentsPerPage)) {
+        this.fetchData(number, this.paymentsPerPage);
       }
       this.$emit("pageChange", number);
     },

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import PaymentsList from "../components/PaymentsList.vue";
 import AddPaymentForm from "../components/AddPaymentForm.vue";
@@ -37,24 +37,21 @@ export default {
 
   data() {
     return {
-      paymentsPerPage: 3,
-      page: this.currentPage,
+      paymentsPerPage: 5,
+      currentPage: this.$route.params.page || 1,
+      showPaymentForm: this.openPaymentForm,
     };
   },
 
   props: {
-    showPaymentForm: {
+    openPaymentForm: {
       type: Boolean,
       default: () => false,
-    },
-    currentPage: {
-      type: Number,
-      default: () => 1,
     },
   },
 
   computed: {
-    ...mapGetters({ paymentsList: "getFetchedPayments" }),
+    ...mapGetters({ paymentsList: "getPayments" }),
 
     currentPagePayments() {
       const { currentPage, paymentsList, paymentsPerPage } = this;
@@ -68,20 +65,22 @@ export default {
   },
 
   methods: {
-    ...mapMutations([
+    ...mapActions([
+      "fetchData",
       "addNewPayment",
-      "removePayment",
-      "updatePayment",
-      "decreaseTotalPayments",
+      "editPayment",
+      "deletePayment",
     ]),
-    ...mapActions(["fetchData"]),
 
     newPayment(newPayment) {
       this.addNewPayment(newPayment);
+      if (this.$route.path !== "/dashboard") {
+        this.$router.push({ path: "/dashboard" });
+      }
     },
 
     changePage(number) {
-      this.page = number;
+      this.currentPage = number;
       this.$router.push({ path: `/dashboard/${number}` });
     },
 
@@ -89,25 +88,24 @@ export default {
       this.$router.push({ path: `/add/payment/${category}?value=${value}` });
     },
 
-    deletePayment(payment) {
-      this.removePayment(payment.id);
-      this.decreaseTotalPayments();
+    removePayment(payment) {
+      this.deletePayment(payment);
     },
 
-    editPayment(payment) {
-      this.updatePayment(payment);
+    updatePayment(payment) {
+      this.editPayment(payment);
     },
   },
 
   created() {
     if (!this.paymentsList.length) {
-      this.fetchData(this.currentPage);
+      this.fetchData(this.currentPage, this.paymentsPerPage);
     }
   },
 
   mounted() {
-    this.$context.EventBus.$on("deletepayment", this.deletePayment);
-    this.$context.EventBus.$on("editpayment", this.editPayment);
+    this.$context.EventBus.$on("deletepayment", this.removePayment);
+    this.$context.EventBus.$on("editpayment", this.updatePayment);
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" placeholder="Date" v-model="date" />
+    <input type="date" placeholder="Date" v-model="date" />
     <select v-model="category">
       <option
         v-for="(option, index) in getCategoriesList"
@@ -17,61 +17,42 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "AddPaymentForm",
   data() {
     return {
       amount: "",
       category: "Food",
-      date: "",
+      date: new Date().toISOString().slice(0, 10),
     };
   },
 
   computed: {
     ...mapGetters(["getCategoriesList", "getTotalPayments"]),
-    getCurrentDate() {
-      const today = new Date();
-      // Добавляем ноль к дню и месяцу если число меньше 10-ти
-      const d =
-        today.getDate().toString().length > 1
-          ? today.getDate()
-          : "0" + today.getDate().toString();
-      const m =
-        (today.getMonth() + 1).toString().length > 1
-          ? today.getMonth() + 1
-          : "0" + (today.getMonth() + 1).toString();
-      const y = today.getFullYear();
-      return `${d}.${m}.${y}`;
-    },
   },
 
   methods: {
-    ...mapMutations(["increaseTotalPayments"]),
     sendPayment() {
       const { category, amount } = this;
 
       const data = {
-        id: this.getTotalPayments + 1,
+        id: Date.now(new Date()),
         amount,
         category,
-        date: this.date || this.getCurrentDate,
+        date: this.date,
       };
-      this.increaseTotalPayments();
       this.$emit("addNewPayment", data);
     },
 
     acceptQuickPayment() {
       if (this.$route.params.category) {
         this.category = this.$route.params.category;
-        this.date = this.getCurrentDate;
       }
 
       if (this.$route.query.value) {
         this.amount = this.$route.query.value;
-        setTimeout(() => {
-          this.sendPayment();
-        }, 300);
+        this.sendPayment();
       }
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" v-model="item.date" />
+    <input type="date" v-model="dateToHTML" />
     <select v-model="item.category">
       <option
         v-for="(option, index) in getCategoriesList"
@@ -20,6 +20,11 @@
 import { mapGetters } from "vuex";
 export default {
   name: "EditPaymentForm",
+  data() {
+    return {
+      dateToHTML: "",
+    };
+  },
   props: {
     item: Object,
     settings: Object,
@@ -27,12 +32,18 @@ export default {
 
   computed: {
     ...mapGetters(["getCategoriesList"]),
+    dateWithCorrectTimezone() {
+      const offset = new Date().getTimezoneOffset() * 60000;
+      return new Date(new Date(this.item.date).getTime() - offset)
+        .toISOString()
+        .slice(0, 10);
+    },
   },
 
   methods: {
     updatePayment() {
       this.$context.emitAction(
-        this.item,
+        { ...this.item, date: this.dateToHTML },
         this.settings.name + this.settings.itemName
       );
 
@@ -42,6 +53,10 @@ export default {
     closeForm() {
       this.$context.hideContentWindow();
     },
+  },
+
+  mounted() {
+    this.dateToHTML = this.dateWithCorrectTimezone;
   },
 };
 </script>

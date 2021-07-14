@@ -10,8 +10,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="payment in payments" :key="payment.id">
-          <td>{{ payment.id }}</td>
+        <tr v-for="(payment, index) in paymentsList" :key="payment.number">
+          <td>{{ payment.number }}</td>
           <td>{{ payment.date }}</td>
           <td>{{ payment.category }}</td>
           <td>{{ payment.amount }}</td>
@@ -21,7 +21,7 @@
           <ContextMenu
             v-if="showMenuForID === payment.id"
             :actions="contextActions"
-            :item="{ ...payment }"
+            :item="{ ...payments[index] }"
           />
         </tr>
       </tbody>
@@ -31,6 +31,7 @@
 
 <script>
 import ContextMenu from "./ContextMenu.vue";
+import formatDate from "../utils/formatDate.js";
 export default {
   name: "PaymentsList",
   components: {
@@ -52,6 +53,17 @@ export default {
       showMenuForID: null,
       contextActions: null,
     };
+  },
+
+  computed: {
+    paymentsList() {
+      const formatedPayments = this.payments.map((payment) => ({ ...payment }));
+      formatedPayments.forEach((payment) => {
+        payment.date = formatDate(new Date(payment.date));
+      });
+
+      return formatedPayments;
+    },
   },
 
   methods: {

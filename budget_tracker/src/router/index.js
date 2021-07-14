@@ -20,7 +20,6 @@ export default new Router({
     {
       path: '/dashboard/:page',
       component: () => import(/* webpackChunkName: "PageDashboard" */ '../pages/PageDashboard.vue'),
-      props: route => ({ currentPage: Number(route.params.page) })
     },
     {
       path: '/about*',
@@ -30,7 +29,7 @@ export default new Router({
     {
       path: '/add/payment/:category',
       component: () => import(/* webpackChunkName: "PageDashboard" */ '../pages/PageDashboard.vue'),
-      props: { showPaymentForm: true },
+      props: { openPaymentForm: true },
     },
     {
       path: '/404',

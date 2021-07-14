@@ -20,7 +20,6 @@ export default {
         this.item,
         this.settings.name + this.settings.itemName
       );
-
       this.closeWindow();
       this.$context.hide();
     },
