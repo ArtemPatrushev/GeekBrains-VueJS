@@ -57,11 +57,11 @@ export default {
 
   computed: {
     paymentsList() {
-      const formatedPayments = this.payments.map((payment) => ({ ...payment }));
+      const formatedPayments = this.payments.map((payment) => payment);
       formatedPayments.forEach((payment) => {
         payment.date = formatDate(new Date(payment.date));
       });
-
+      console.log(formatedPayments === this.payments);
       return formatedPayments;
     },
   },
@@ -77,12 +77,12 @@ export default {
   },
 
   mounted() {
-    this.$context.EventBus.$on("show", (data) => {
+    this.$context?.EventBus.$on("show", (data) => {
       this.contextActions = data.actions;
       this.showMenuForID = data.item.id;
     });
 
-    this.$context.EventBus.$on("hide", () => {
+    this.$context?.EventBus.$on("hide", () => {
       this.showMenuForID = null;
     });
   },

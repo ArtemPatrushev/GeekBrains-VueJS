@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       paymentsPerPage: 5,
-      currentPage: this.$route.params.page || 1,
+      currentPage: this.$route?.params.page || 1,
       showPaymentForm: this.openPaymentForm,
     };
   },
@@ -46,7 +46,7 @@ export default {
   props: {
     openPaymentForm: {
       type: Boolean,
-      default: () => false,
+      default: () => true,
     },
   },
 
@@ -104,8 +104,8 @@ export default {
   },
 
   mounted() {
-    this.$context.EventBus.$on("deletepayment", this.removePayment);
-    this.$context.EventBus.$on("editpayment", this.updatePayment);
+    this.$context?.EventBus.$on("deletepayment", this.removePayment);
+    this.$context?.EventBus.$on("editpayment", this.updatePayment);
   },
 };
 </script>

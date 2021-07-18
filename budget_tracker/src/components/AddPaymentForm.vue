@@ -29,7 +29,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getCategoriesList", "getTotalPayments"]),
+    ...mapGetters(["getCategoriesList"]),
   },
 
   methods: {
@@ -46,11 +46,11 @@ export default {
     },
 
     acceptQuickPayment() {
-      if (this.$route.params.category) {
+      if (this.$route.params?.category) {
         this.category = this.$route.params.category;
       }
 
-      if (this.$route.query.value) {
+      if (this.$route.query?.value) {
         this.amount = this.$route.query.value;
         this.sendPayment();
       }
