@@ -27,11 +27,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "PageAbout" */ '../pages/PageAbout.vue'),
     },
     {
-      path: '/add/payment/:category',
-      component: () => import(/* webpackChunkName: "PageDashboard" */ '../pages/PageDashboard.vue'),
-      props: { openPaymentForm: true },
-    },
-    {
       path: '/404',
       name: 'NotFound',
       component: () => import(/* webpackChunkName: "Page404" */'../pages/Page404.vue'),

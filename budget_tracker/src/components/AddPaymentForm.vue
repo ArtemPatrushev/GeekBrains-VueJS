@@ -44,27 +44,6 @@ export default {
       };
       this.$emit("addNewPayment", data);
     },
-
-    acceptQuickPayment() {
-      if (this.$route.params?.category) {
-        this.category = this.$route.params.category;
-      }
-
-      if (this.$route.query?.value) {
-        this.amount = this.$route.query.value;
-        this.sendPayment();
-      }
-    },
-  },
-
-  watch: {
-    $route() {
-      this.acceptQuickPayment();
-    },
-  },
-
-  mounted() {
-    this.acceptQuickPayment();
   },
 };
 </script>

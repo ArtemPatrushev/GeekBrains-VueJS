@@ -2,15 +2,6 @@
   <div>
     <button @click="showPaymentForm = !showPaymentForm">ADD NEW COST+</button>
     <br />
-    <button @click="quickPayment('Food', 200)">Quick payment - Food 200</button>
-    <br />
-    <button @click="quickPayment('Transport', 50)">
-      Quick payment - Transport 50
-    </button>
-    <br />
-    <button @click="quickPayment('Entertainment', 2000)">
-      Quick payment - Entertainment 2000
-    </button>
     <transition name="fade">
       <AddPaymentForm @addNewPayment="newPayment" v-show="showPaymentForm" />
     </transition>
@@ -39,15 +30,8 @@ export default {
     return {
       paymentsPerPage: 5,
       currentPage: this.$route?.params.page || 1,
-      showPaymentForm: this.openPaymentForm,
+      showPaymentForm: false,
     };
-  },
-
-  props: {
-    openPaymentForm: {
-      type: Boolean,
-      default: () => true,
-    },
   },
 
   computed: {
@@ -82,10 +66,6 @@ export default {
     changePage(number) {
       this.currentPage = number;
       this.$router.push({ path: `/dashboard/${number}` });
-    },
-
-    quickPayment(category, value) {
-      this.$router.push({ path: `/add/payment/${category}?value=${value}` });
     },
 
     removePayment(payment) {

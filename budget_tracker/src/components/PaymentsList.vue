@@ -61,7 +61,6 @@ export default {
       formatedPayments.forEach((payment) => {
         payment.date = formatDate(new Date(payment.date));
       });
-      console.log(formatedPayments === this.payments);
       return formatedPayments;
     },
   },
