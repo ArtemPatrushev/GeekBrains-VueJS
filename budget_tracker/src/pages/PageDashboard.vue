@@ -1,10 +1,18 @@
 <template>
   <div>
-    <button @click="showPaymentForm = !showPaymentForm">ADD NEW COST+</button>
-    <br />
-    <transition name="fade">
-      <AddPaymentForm @addNewPayment="newPayment" v-show="showPaymentForm" />
-    </transition>
+    <v-dialog v-model="showPaymentForm" width="500">
+      <template #activator="{ on }">
+        <v-btn color="teal" dark large v-on="on">
+          <v-icon left>mdi-plus-thick</v-icon>
+          ADD NEW PAYMENT
+        </v-btn>
+      </template>
+
+      <v-card>
+        <AddPaymentForm @addNewPayment="newPayment" />
+      </v-card>
+    </v-dialog>
+
     <PaymentsList :payments="currentPagePayments" />
     <Pagination :paymentsPerPage="paymentsPerPage" @pageChange="changePage" />
   </div>

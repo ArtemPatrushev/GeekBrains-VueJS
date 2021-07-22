@@ -1,19 +1,27 @@
 <template>
-  <div>
-    <input type="date" placeholder="Date" v-model="date" />
-    <select v-model="category">
-      <option
-        v-for="(option, index) in getCategoriesList"
-        :value="option"
-        :key="index"
-      >
-        {{ option }}
-      </option>
-    </select>
+  <v-card class="pa-10">
+    <h2 class="mb-4 text-h4">Add New Payment</h2>
+    <v-menu
+      :close-on-content-click="false"
+      transition="scale-transition"
+      offset-y
+      min-width="auto"
+    >
+      <template #activator="{ on }">
+        <v-text-field v-model="date" label="Date" v-on="on"></v-text-field>
+      </template>
+      <v-date-picker v-model="date"></v-date-picker>
+    </v-menu>
 
-    <input type="text" placeholder="Amount" v-model.number="amount" />
-    <button @click="sendPayment">Save</button>
-  </div>
+    <v-select
+      :items="getCategoriesList"
+      label="Category"
+      v-model="category"
+    ></v-select>
+
+    <v-text-field label="Amount" v-model.number="amount"></v-text-field>
+    <v-btn @click="sendPayment">Save</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -23,7 +31,7 @@ export default {
   data() {
     return {
       amount: "",
-      category: "Food",
+      category: "",
       date: new Date().toISOString().slice(0, 10),
     };
   },

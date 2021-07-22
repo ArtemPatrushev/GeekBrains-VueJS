@@ -1,18 +1,21 @@
 <template>
-  <div id="app">
-    <header>
-      <router-link to="/dashboard">Dashboard</router-link> |
-      <router-link to="/about">About</router-link>
-    </header>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app flat>
+      <v-btn to="/dashboard" class="mr-2" depressed>Dashboard</v-btn>
+      <v-btn to="/about" depressed>About</v-btn>
+    </v-app-bar>
+    <v-main class="ma-8">
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 export default {
   name: "App",
+
+  data: () => ({
+    //
+  }),
 };
 </script>
-
-<style lang="scss">
-</style>
