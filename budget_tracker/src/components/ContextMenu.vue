@@ -1,6 +1,14 @@
 <template>
   <div class="wrapper">
-    <div class="menu">
+    <v-menu offset-y v-for="(action, index) in actions" :key="index">
+      <template #activator="{ on }">
+        <v-btn v-on="on" @click="choseAction(action)" depressed class="mb-2">
+          {{ action.name }}
+        </v-btn>
+      </template>
+      <component :is="contextWindowContent" :item="item" :settings="settings" />
+    </v-menu>
+    <!-- <div class="menu">
       <button
         class="menu-btn"
         v-for="(action, index) in actions"
@@ -9,8 +17,9 @@
       >
         {{ action.name }}
       </button>
-      <component :is="contextWindowContent" :item="item" :settings="settings" />
-    </div>
+
+      <component :is="contextWindowContent" :item="item" :settings="settings" /> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -54,42 +63,14 @@ export default {
 </script>
 
 <style scoped lang="sass">
-i
-  font-size: 18px
-
-.icon-btn
-  width: 15px
-  padding: 5px
-  align-self: flex-end
-
-.icon-btn:hover
-  background-color: #eaeaea
 .wrapper
-  position: relative
   max-width: 150px
   display: flex
   flex-direction: column
-
-button
-  display: flex
-  justify-content: center
-  border: none
-  cursor: pointer
-  background-color: transparent
-
-.menu-btn
-  height: 25px
-  width: 100%
-  justify-content: start
-
-.menu-btn:hover
-  background-color: #eaeaea
+  background-color: #fff
 
 .menu
-  position: absolute
-  z-index: 100
-  left: 50%
-  top: 100%
+
   padding: 10px 0
   box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.49)
   background-color: #fff

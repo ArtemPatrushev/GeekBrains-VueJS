@@ -61,5 +61,7 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style lang="sass" scoped>
+div
+  background-color: #fff
+</style> 

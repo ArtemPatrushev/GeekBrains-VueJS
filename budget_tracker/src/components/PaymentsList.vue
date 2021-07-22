@@ -15,14 +15,19 @@
           <td>{{ payment.date }}</td>
           <td>{{ payment.category }}</td>
           <td>{{ payment.amount }}</td>
-          <button class="icon-btn" @click="showContextMenu(payment)">
-            <i class="fas fa-ellipsis-v"></i>
-          </button>
-          <ContextMenu
-            v-if="showMenuForID === payment.id"
-            :actions="contextActions"
-            :item="{ ...payments[index] }"
-          />
+
+          <v-menu absolute offset-y :close-on-content-click="false">
+            <template #activator="{ on }">
+              <v-btn small icon @click="showContextMenu(payment)" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <ContextMenu
+              v-if="showMenuForID === payment.id"
+              :actions="contextActions"
+              :item="{ ...payments[index] }"
+            />
+          </v-menu>
         </tr>
       </tbody>
     </table>
@@ -67,16 +72,14 @@ export default {
 
   methods: {
     showContextMenu(payment) {
-      if (!this.showMenuForID) {
-        this.$context.show(payment, this.paymentActions);
-      } else {
-        this.$context.hide();
-      }
+      console.log("fired");
+      this.$context.show(payment, this.paymentActions);
     },
   },
 
   mounted() {
     this.$context?.EventBus.$on("show", (data) => {
+      console.log("show event catch");
       this.contextActions = data.actions;
       this.showMenuForID = data.item.id;
     });
@@ -99,4 +102,7 @@ tr
 td,
 th
   padding: 15px 15px 5px 5px
+
+.v-btn
+  margin-top: 10px
 </style>
