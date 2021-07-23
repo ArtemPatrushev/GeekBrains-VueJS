@@ -15,13 +15,22 @@
           <td>{{ payment.date }}</td>
           <td>{{ payment.category }}</td>
           <td>{{ payment.amount }}</td>
-
-          <v-menu absolute offset-y :close-on-content-click="false">
-            <template #activator="{ on }">
+          <v-btn small icon @click="showContextMenu(payment, $event)">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+          <v-menu
+            :close-on-click="false"
+            :close-on-content-click="false"
+            content-class="elevation-1"
+            v-model="displayMenu"
+            :position-x="x"
+            :position-y="y"
+          >
+            <!-- <template #activator="{ on }">
               <v-btn small icon @click="showContextMenu(payment)" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
-            </template>
+            </template> -->
             <ContextMenu
               v-if="showMenuForID === payment.id"
               :actions="contextActions"
@@ -55,8 +64,11 @@ export default {
         { name: "Edit", comp: "EditPaymentForm", itemName: "Payment" },
         { name: "Delete", comp: "ConfirmWindow", itemName: "Payment" },
       ],
+      displayMenu: false,
       showMenuForID: null,
       contextActions: null,
+      x: 0,
+      y: 0,
     };
   },
 
@@ -71,21 +83,26 @@ export default {
   },
 
   methods: {
-    showContextMenu(payment) {
-      console.log("fired");
+    showContextMenu(payment, e) {
+      this.x = e.clientX + 10;
+      this.y = e.clientY;
+      if (this.showMenuForID === payment.id && this.displayMenu) {
+        this.displayMenu = false;
+        return;
+      }
       this.$context.show(payment, this.paymentActions);
     },
   },
 
   mounted() {
     this.$context?.EventBus.$on("show", (data) => {
-      console.log("show event catch");
       this.contextActions = data.actions;
       this.showMenuForID = data.item.id;
+      this.displayMenu = true;
     });
 
     this.$context?.EventBus.$on("hide", () => {
-      this.showMenuForID = null;
+      this.displayMenu = false;
     });
   },
 };

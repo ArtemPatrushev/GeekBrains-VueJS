@@ -1,25 +1,27 @@
 <template>
   <div class="wrapper">
-    <v-menu offset-y v-for="(action, index) in actions" :key="index">
-      <template #activator="{ on }">
-        <v-btn v-on="on" @click="choseAction(action)" depressed class="mb-2">
-          {{ action.name }}
-        </v-btn>
-      </template>
+    <v-btn
+      plain
+      small
+      v-for="action in actions"
+      :key="action.name"
+      @click="choseAction(action, $event)"
+    >
+      {{ action.name }}
+    </v-btn>
+    <v-btn plain small color="error" @click="$context.hide()">Cancel </v-btn>
+
+    <v-menu
+      offset-x
+      :close-on-content-click="false"
+      :close-on-click="true"
+      v-model="showContextWindow"
+      :position-x="x"
+      :position-y="y"
+      content-class="elevation-2"
+    >
       <component :is="contextWindowContent" :item="item" :settings="settings" />
     </v-menu>
-    <!-- <div class="menu">
-      <button
-        class="menu-btn"
-        v-for="(action, index) in actions"
-        :key="index"
-        @click="choseAction(action)"
-      >
-        {{ action.name }}
-      </button>
-
-      <component :is="contextWindowContent" :item="item" :settings="settings" /> -->
-    <!-- </div> -->
   </div>
 </template>
 
@@ -42,17 +44,25 @@ export default {
     return {
       contextWindowContent: "",
       settings: null,
+      showContextWindow: false,
+      x: 0,
+      y: 0,
     };
   },
 
   methods: {
-    choseAction(action) {
+    choseAction(action, e) {
       this.$set(this, "settings", action);
       this.contextWindowContent = action.comp;
+      this.x = e.clientX;
+      this.y = e.clientY;
+      if (this.showContextWindow) return;
+      this.showContextWindow = true;
     },
 
     onHideContentWindow() {
       this.contextWindowContent = "";
+      this.showContextWindow = false;
     },
   },
 
@@ -68,10 +78,9 @@ export default {
   display: flex
   flex-direction: column
   background-color: #fff
+  position: relative
 
 .menu
-
   padding: 10px 0
-  box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.49)
   background-color: #fff
 </style>

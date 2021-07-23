@@ -1,9 +1,13 @@
 <template>
-  <div>
-    {{ settings.name }} {{ settings.itemName }}? <br />
-    <button @click="confirmAction">Yes</button>
-    <button @click="closeWindow">Cancel</button>
-  </div>
+  <v-card class="pa-2">
+    <v-card-title class="pa-2"
+      >{{ settings.name }} {{ settings.itemName }}?</v-card-title
+    >
+    <v-card-actions>
+      <v-btn small outlined color="success" @click="confirmAction">Yes</v-btn>
+      <v-btn small depressed color="error" @click="closeWindow">Cancel</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>

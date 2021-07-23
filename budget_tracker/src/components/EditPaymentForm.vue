@@ -1,19 +1,30 @@
 <template>
-  <div>
-    <input type="date" v-model="dateToHTML" />
-    <select v-model="item.category">
-      <option
-        v-for="(option, index) in getCategoriesList"
-        :value="option"
-        :key="index"
-      >
-        {{ option }}
-      </option>
-    </select>
-    <input type="text" placeholder="Amount" v-model.number="item.amount" />
-    <button @click="updatePayment">Save</button>
-    <button @click="closeForm">Cancel</button>
-  </div>
+  <v-card max-width="180px" class="pa-2">
+    <v-menu transition="scale-transition" offset-x min-width="auto" absolute>
+      <template #activator="{ on }">
+        <v-text-field
+          v-model="dateToHTML"
+          label="Date"
+          v-on="on"
+          class="mt-0"
+        ></v-text-field>
+      </template>
+      <v-date-picker v-model="dateToHTML"></v-date-picker>
+    </v-menu>
+
+    <v-select
+      :items="getCategoriesList"
+      label="Category"
+      v-model="item.category"
+    ></v-select>
+
+    <v-text-field label="Amount" v-model.number="item.amount"></v-text-field>
+
+    <v-btn small depressed color="success" @click="updatePayment">Save</v-btn>
+    <v-btn small outlined color="error" class="ml-2" @click="closeForm"
+      >Cancel</v-btn
+    >
+  </v-card>
 </template>
 
 <script>
@@ -47,7 +58,6 @@ export default {
         this.settings.name + this.settings.itemName
       );
 
-      this.closeForm();
       this.$context.hide();
     },
     closeForm() {
